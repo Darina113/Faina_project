@@ -2,11 +2,8 @@ package Functions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -28,7 +25,13 @@ public class AssertionsClass {
     public void equalsOfStrings(String actualString, String expectedString){
         logger.info("trying to check element "+actualString.toString()+" Equals to String "+expectedString.toString());
         assertEquals(actualString,expectedString,
-                "Я ожидала получить "+expectedString+". А получила "+ actualString);
+                "Я ожидал получить "+expectedString+". А получил "+ actualString);
+    }
+    public void elementIsDisplayed(String xpath){
+        assertTrue(elements.isElementDisplayed(xpath), "Элемент не отображается, хотя должен был");
+    }
+    public void elementIsDisplayed(By by){
+        assertTrue(elements.isElementDisplayed(by), "Элемент не отображается, хотя должен был");
     }
 
 }

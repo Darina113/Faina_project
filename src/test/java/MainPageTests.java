@@ -1,50 +1,31 @@
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Set;
+
+import static org.testng.AssertJUnit.assertTrue;
 
 public class MainPageTests extends BaseTest{
 
-    @Test(priority = 1)
+    @Test(priority = 1)//корректное название главной страниці
     public void titleTest() {
         mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
+        System.out.println(driver.getTitle());
+        //System.out.println(driver.getCurrentUrl());
         mainPage.checkNameOfPage();
-        //String title="≡ Інтернет магазин ФОКСТРОТ | Мережа магазинів побутової техніки та електроніки в Україні";
-        //assertions.equalsOfStrings(driver.getTitle(), title);
     }
-
-    @Test(priority = 4)
-    public void locationTest(){
+    @Test(priority = 2)//возврат на главную страницу с помоью лого
+    public void comeBacktoMainViaLogo(){
         mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
-        //mainPage.acceptCity();//мы обращаемся к классу mainPage и вызываем метод подтвердить местоположение
-        mainPage.changeCity();//мы обращаемся к классу mainPage и вызываем метод мой стандартный до момента ввода необходимого города
-        mainPage.choiceCityAndCheck("Львів");//мы обращаемся к классу mainPage и вызываем метод кот.принимает город
-        //mainPage.switchToCorrectcity("Дніпро");
+        mainPage.switchToSectionZoloto();
+        mainPage.comeBackToMainPageViaLogo();
     }
     @Test(priority = 3)
-    public void switchLangTest(){
+    public void rederectToFacebook(){//переход по соц сети фейсбук
         mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
-        //mainPage.acceptCity();//мы обращаемся к классу mainPage и вызываем метод подтвердить местоположение
-        mainPage.switchLanguage();
-        mainPage.checkGetTextFromElementWithTranslateText();
-        //String elementToTest="Актуальные предложения";
-        //assertions.equalsOfElementAndLabelText(By.xpath("//div[@class='current-offer-head']/div[@class='page__title']"),elementToTest);
-    }
-    @Test(priority = 2)
-    public void comeBackToMainPage(){
-        //mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
-        mainPage.acceptCity();//мы обращаемся к классу mainPage и вызываем метод подтвердить местоположение
-        mainPage.searchByText("iPhone");
-        tvPage.waitForH1Loaded();
-        tvPage.clickOnIcon();//мы обращаемся к классу searchResultPage и вызываем метод кликанья на логотип Фокстрота
-        String currentURL="https://www.foxtrot.com.ua/uk/shop/dnepr.html";
-        assertions.equalsOfStrings(driver.getCurrentUrl(), currentURL);
-
-    }
-    @Test(priority = 5)
-    public void rederectToFacebook(){
-        mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
-        //mainPage.acceptCity();//мы обращаемся к классу mainPage и вызываем метод подтвердить местоположение
         Set<String> setFirst = driver.getWindowHandles(); //получаем идент.номер первого окна из множества открытых окон
         String firstdDesc = setFirst.iterator().next(); //получаем дискриптор нужного нам окна
         mainPage.clickOnSocialNet();
@@ -52,9 +33,27 @@ public class MainPageTests extends BaseTest{
         setSecond.removeAll(setFirst);//убираем дубликаты
         String secondDesc = setSecond.iterator().next(); //получаем дискриптор нужного нам окна
         driver.switchTo().window(secondDesc);
+        System.out.println(driver.getCurrentUrl());
         mainPage.checkPageOfFB();
+        driver.switchTo().window(firstdDesc);//добавила чтобы дальнейшие тесты не упали
+    }
+    @Test(priority = 4)//отображение корзины
+    public void korzinaDisplayed(){
+        mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
+        mainPage.checkDisplayedKorzina();
+    }
+    @Test(priority = 5)//под вопросом
+    public void zakazZvorotniiDzvinok(){
+        mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
+        mainPage.zakazZvorotnDzvinka("Дарина");
 
-        //driver.switchTo().window(firstdDesc);//добавила чтобы дальнейшие тесты не упали
+    }
+    @Test(priority = 6)//наличие секций в каталоге
+    public void countSection(){
+        mainPage.openPage();//мы обращаемся к классу mainPage и вызываем метод открыть страницу
+        mainPage.sections();
+        List<WebElement> listSection=driver.findElements(By.xpath("//ul[@class='list-unstyled catalog-drop-list']/li"));
+        assertTrue(listSection.size()==7);
     }
 
 

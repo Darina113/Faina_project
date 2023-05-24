@@ -1,11 +1,8 @@
 package Functions;
 
-import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class ElementsClass {
         static final Logger logger = LoggerFactory.getLogger(ElementsClass.class);
@@ -61,12 +58,32 @@ public class ElementsClass {
             findSingleElement(locator).sendKeys(text);
 
          }
+    public void sendKeysAndChislaToElementBy(By locator,int... num){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int number : num) {
+            stringBuilder.append(number);}
+        String text = stringBuilder.toString();
+
+        logger.info("trying to find element  "+locator.toString());
+        logger.info("typing text to Element "+num);
+        findSingleElement(locator).sendKeys(text);
+
+    }
          public void sendKeysToElementByAndClick(By locator,String text){
         logger.info("trying to find element  "+locator.toString());
         logger.info("typing text to Element  "+text.toString());
         findSingleElement(locator).sendKeys(text);
         findSingleElement(locator).sendKeys(Keys.ENTER);
 
+        }
+    public boolean isElementDisplayed(String xpath){
+        return findElementByXpath(xpath).isDisplayed();
+    }
+    public void sendKeys(By locator, int... numbers) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int number : numbers) {
+            stringBuilder.append(number);}
+        String text = stringBuilder.toString();
         }
 
 }

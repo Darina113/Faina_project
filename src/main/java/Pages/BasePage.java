@@ -1,10 +1,10 @@
 package Pages;
 
+import Functions.ActionClass;
 import Functions.AssertionsClass;
 import Functions.ElementsClass;
 import Functions.WaitersClass;
 import org.openqa.selenium.WebDriver;
-import Functions.ActionClass;
 
 public class BasePage {
     protected static WebDriver driver;

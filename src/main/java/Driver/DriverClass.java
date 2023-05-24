@@ -10,11 +10,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class DriverClass {
     static final Logger logger = LoggerFactory.getLogger(DriverClass.class);
-    private static final long IMPLICITY_WAIT= 10l;
+    private static final long IMPLICITY_WAIT= 5l;
     static WaitersClass waiters;
     static ActionClass action;
     static AssertionsClass assertions;
@@ -33,6 +34,7 @@ public class DriverClass {
         assertions = new AssertionsClass(driver);
 
         driver.manage().window().maximize();
+        //driver.manage().timeouts().pageLoadTimeout(IMPLICITY_WAIT, TimeUnit.SECONDS); //отработка скрипта 10 сек
         driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
         return driver;
     }
